@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.dan.workout.HomeActivity"
+    android:fillViewport="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView android:id="@+id/exercise_name_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="Work Out"
+            android:textStyle="bold"
+            android:textSize="35sp" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/temp_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/what_exercise_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="15dp"
+                android:text="What Exercise?"
+                android:textSize="30sp"
+                android:textStyle="italic|bold" />
+
+            <Button
+                style = "@style/button_text"
+                android:background="@drawable/button_add_exercise"
+                android:textSize="35sp"
+                android:text="+"
+                android:layout_toRightOf="@+id/what_exercise_text_view"
+                android:layout_margin="10dp"
+                android:onClick="addExerciseList"/>
+
+            <Button
+                style = "@style/button_text"
+                android:background="@drawable/button_add_exercise"
+                android:text="-"
+                android:layout_toLeftOf="@+id/what_exercise_text_view"
+                android:layout_margin="10dp"
+                android:onClick="removeExercise"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout android:id="@+id/exercise_index_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:gravity="center">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>
