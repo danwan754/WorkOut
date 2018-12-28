@@ -15,15 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="25dp"
         >
-        <TextView android:id="@+id/exercise_name_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:text="Work Out"
-            android:textStyle="bold"
-            android:textSize="35sp" />
 
 
         <RelativeLayout

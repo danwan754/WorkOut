@@ -1,158 +1,208 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".MainActivity">
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/exercise_name_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".MainActivity">
-
-        <TextView
-            android:id="@+id/exercise_name_text_view"
-            android:text="(Exercise Name)"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:gravity="center"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/currentPushUp_set_text_view"
-            android:text="Current Set:  1"
-            android:visibility="visible"
-            android:layout_marginLeft="20dp"
-            android:textSize="15sp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        android:layout_margin="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center"
+        android:text="(Exercise Name)"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-
-        <RelativeLayout
-            android:id="@+id/inputs_rel_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <EditText
-                android:id="@+id/sets_edit_text"
-                android:inputType="phone"
-                android:layout_alignParentTop="true"
-                android:hint="Number of Sets"
-                android:singleLine="true"
-                android:textStyle="italic"
-                android:visibility="visible"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
- />
+    <EditText
+        android:id="@+id/sets_edit_text"
+        android:layout_width="72dp"
+        android:layout_height="32dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/edittext_box"
+        android:gravity="center"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:text="0"
+        android:textStyle="italic"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/confirmSets_button"
+        app:layout_constraintTop_toBottomOf="@+id/current_set_text_view" />
 
 
-            <Button
-                android:id="@+id/confirmSets_button"
-                android:layout_marginTop="0dp"
-                android:text="Update Sets."
-                android:textAllCaps="false"
-                android:visibility="visible"
-                android:onClick="setSetEditText"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/sets_edit_text"/>
+    <Button
+        android:id="@+id/confirmSets_button"
+        android:layout_width="85dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginRight="76dp"
+        android:layout_toRightOf="@id/sets_edit_text"
+        android:background="@drawable/button_add_exercise"
+        android:onClick="setSetEditText"
+        android:text="Update"
+        android:textAllCaps="false"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_set_text_view" />
 
-            <EditText
-                android:id="@+id/time_edit_text"
-                android:inputType="phone"
-                android:layout_below="@id/sets_edit_text"
-                android:hint="Countdown Time"
-                android:singleLine="true"
-                android:textStyle="italic"
-                android:visibility="visible"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
+    <EditText
+        android:id="@+id/time_edit_text"
+        android:layout_width="71dp"
+        android:layout_height="34dp"
+        android:layout_below="@id/sets_edit_text"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/edittext_box"
+        android:gravity="center"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:text="0"
+        android:textStyle="italic"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/confirmTime_button"
+        app:layout_constraintTop_toBottomOf="@+id/sets_edit_text" />
 
-                />
+    <Button
+        android:id="@+id/confirmTime_button"
+        android:layout_width="84dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/sets_edit_text"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginRight="76dp"
+        android:layout_toRightOf="@id/time_edit_text"
+        android:background="@drawable/button_add_exercise"
+        android:onClick="setTimeLeft"
+        android:text="Update"
+        android:textAllCaps="false"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmSets_button" />
 
-            <Button
-                android:id="@+id/confirmTime_button"
-                android:layout_marginTop="0dp"
-                android:text="Update Timer."
-                android:textAllCaps="false"
-                android:visibility="visible"
-                android:layout_below="@id/sets_edit_text"
-                android:layout_toRightOf="@id/time_edit_text"
-                android:onClick="setTimeLeft"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                />
+    <TextView
+        android:id="@+id/timer_display_text_view"
+        android:layout_width="322dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="28dp"
+        android:gravity="center"
+        android:text="Rest : 0"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/start_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time_edit_text"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="294dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/timer_button"
+        android:onClick="startTimer"
+        android:text="Start Set 1"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/reset_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/reset_button"
+        android:layout_width="294dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="52dp"
+        android:background="@drawable/timer_button"
+        android:onClick="resetTime"
+        android:text="Reset"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/current_set_text_view"
+        android:layout_width="338dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Current Set:  1"
+        android:textSize="20sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exercise_name_text_view" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="61dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:textSize="20sp"
+        android:text="Sets:"
+        app:layout_constraintEnd_toStartOf="@+id/sets_edit_text"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_set_text_view" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:textSize="20sp"
+        android:text="Rest:"
+        app:layout_constraintEnd_toStartOf="@+id/time_edit_text"
+        app:layout_constraintHorizontal_bias="0.876"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
-            <ImageView
-                android:id="@+id/check_mark_image_view"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:src="@drawable/checkmark"
-                android:visibility="invisible" />
-
-            <Button
-                android:id="@+id/donePushUp_button"
-                android:layout_marginTop="0dp"
-                android:text="Done. Let's do a different exercise."
-                android:textSize="30sp"
-                android:textStyle="bold|italic"
-                android:visibility="invisible"
-                android:layout_below="@id/check_mark_image_view"
-                android:onClick="restartApp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/timer_display_text_view"
-            android:layout_marginBottom="10dp"
-            android:text="Timer: 0"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-
-        <LinearLayout
-            android:id="@+id/timer_buttons_linear_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <Button
-                android:id="@+id/start_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Start Set 1"
-                android:onClick="startTimer"/>
-
-            <Button
-                android:id="@+id/stop_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Stop"
-                android:onClick="pauseTime"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Reset"
-                android:onClick="resetTime"/>
-
-        </LinearLayout>
-    </LinearLayout>
-
-</ScrollView>
-
+</android.support.constraint.ConstraintLayout>

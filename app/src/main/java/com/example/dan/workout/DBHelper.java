@@ -40,14 +40,15 @@ public class DBHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public boolean insertExercise(String exercise, String sets, String reps, String time, String done){
+//    public boolean insertExercise(String exercise, String sets, String reps, String time, String done){
+    public boolean insertExercise(String exercise){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_EXERCISE, exercise);
-        contentValues.put(COLUMN_SETS, sets);
-        contentValues.put(COLUMN_REPS, reps);
-        contentValues.put(COLUMN_TIME, time);
-        contentValues.put(COLUMN_DONE, done); //note that 'done' is 'yes' or 'no'
+//        contentValues.put(COLUMN_SETS, sets);
+//        contentValues.put(COLUMN_REPS, reps);
+//        contentValues.put(COLUMN_TIME, time);
+//        contentValues.put(COLUMN_DONE, done); //note that 'done' is 'yes' or 'no'
         db.insert(TABLE_NAME, null, contentValues);
         return true;
     }
@@ -102,13 +103,13 @@ public class DBHelper extends SQLiteOpenHelper{
 
 //        Log.d("after rawQuery: ","appear?");
 
-            for(int i=0; i< column_list.length; i++) {
+        for(int i=0; i< column_list.length; i++) {
 
-                field_data.add(cursor.getString(cursor.getColumnIndexOrThrow(column_list[i])));
-//                cursor.moveToNext();
-            }
+            field_data.add(cursor.getString(cursor.getColumnIndexOrThrow(column_list[i])));
+//          cursor.moveToNext();
+        }
 
-        Log.d("should be 3 columns: ",column_list[0]+","+column_list[1]+","+column_list[2]);
+//        Log.d("should be 3 columns: ",column_list[0]+","+column_list[1]+","+column_list[2]);
         return field_data;
     }
 
@@ -124,7 +125,7 @@ public class DBHelper extends SQLiteOpenHelper{
             exercise_list.add(cursor.getString(cursor.getColumnIndex(COLUMN_EXERCISE)));
             cursor.moveToNext();
         }
-        Log.d("list all exercises", ""+ exercise_list.toString());
+//        Log.d("list all exercises", ""+ exercise_list.toString());
         return exercise_list;
     }
 

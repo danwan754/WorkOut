@@ -1,17 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+
+    <TextView
+        android:id="@+id/new_exercise_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="center"
+        android:background="#4FC3F7"
+        android:inputType="textPersonName"
+        android:text="New Exercise"
+        android:textSize="35sp"
+        android:fontFamily="serif"/>
 
     <EditText
         android:id="@+id/name_to_add_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textAllCaps="false"
-        />
+        android:layout_margin="10dp"
+        android:background="@drawable/edittext_box"
+        android:gravity="center"
+        android:hint="exercise name"
+        android:inputType="text"
+        android:textSize="30sp" />
 
 </LinearLayout>

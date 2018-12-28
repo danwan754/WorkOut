@@ -8,6 +8,7 @@ import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     DBHelper MyDB;
 
@@ -38,18 +39,30 @@ public class MainActivity extends ActionBarActivity {
 
         MyDB = new DBHelper(this);
 
-        TextView setEdit = (TextView) findViewById(R.id.sets_edit_text);
-        TextView setTime = (TextView) findViewById(R.id.time_edit_text);
+        EditText setEdit = (EditText) findViewById(R.id.sets_edit_text);
+        EditText setTime = (EditText) findViewById(R.id.time_edit_text);
 
         //get previous values of sets and timer
         ArrayList<String> temp = MyDB.getFieldData(name);
 
-        setEdit.setText(temp.get(0));
-        setSetEditText(setEdit);
+        // if number of sets field is empty, prompt user to enter value
+        if (temp.get(0) == null) {
+//            setEdit.requestFocus();
+            Log.d("SET", "SET IS NULL");
+        }
+        else {
+            setEdit.setText(temp.get(0));
+            setSetEditText(setEdit);
+        }
 
-        setTime.setText(temp.get(2));
-        setTimeLeft(setTime);
+        setEdit.requestFocus();
+        setEdit.clearFocus();
 
+        // display the time value if not empty
+        if (temp.get(2) !=  null) {
+            setTime.setText(temp.get(2));
+            setTimeLeft(setTime);
+        }
     }
 
 
@@ -84,14 +97,20 @@ public class MainActivity extends ActionBarActivity {
 
 
     public void startTimer(View v) {
-        final TextView currentSet = (TextView) findViewById(R.id.currentPushUp_set_text_view);
+        final TextView currentSet = (TextView) findViewById(R.id.current_set_text_view);
         currentSet.setVisibility(View.VISIBLE);
 
         final Button startButton = (Button) findViewById(R.id.start_button);
-        startButton.setVisibility(View.INVISIBLE);
 
-        final Button stopButton = (Button) findViewById(R.id.stop_button);
-        stopButton.setVisibility(View.VISIBLE);
+        String buttonString = startButton.getText().toString();
+        if (buttonString.equals("Pause")) {
+            startButton.setText("Resume");
+            pauseTime();
+            return;
+        }
+        else {
+            startButton.setText("Pause");
+        }
 
         countingDownTimer = new CountDownTimer(timeLeft, 1) {
             TextView timerDisplay = (TextView) findViewById(R.id.timer_display_text_view);
@@ -113,8 +132,6 @@ public class MainActivity extends ActionBarActivity {
                     timerDisplay.setText("All sets done.");
                 } else {
                     startButton.setText("Start set " + setNumber);
-                    startButton.setVisibility(View.VISIBLE);
-                    stopButton.setVisibility(View.INVISIBLE);
                     currentSet.setText("Current Set: " + setNumber);
                 }
                 //             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -124,16 +141,9 @@ public class MainActivity extends ActionBarActivity {
         }.start();
     }
 
-    public void pauseTime(View v) {
+    public void pauseTime() {
         if (countingDownTimer != null) {
             countingDownTimer.cancel();
-
-            Button startButton = (Button) findViewById(R.id.start_button);
-            startButton.setText("Resume Set " + setNumber);
-            startButton.setVisibility(View.VISIBLE);
-
-            Button stopButton = (Button) findViewById(R.id.stop_button);
-            stopButton.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -142,7 +152,6 @@ public class MainActivity extends ActionBarActivity {
         if (countingDownTimer != null) {
             countingDownTimer.cancel();
 
-//            setTimeLeft();
             timeLeft = tempTime;
 
             TextView timerDisplay = (TextView) findViewById(R.id.timer_display_text_view);
@@ -150,24 +159,11 @@ public class MainActivity extends ActionBarActivity {
 
             Button startButton = (Button) findViewById(R.id.start_button);
             startButton.setText("Start Set " + setNumber);
-            startButton.setVisibility(View.VISIBLE);
-
-            Button stopButton = (Button) findViewById(R.id.stop_button);
-            stopButton.setVisibility(View.INVISIBLE);
         }
     }
 
     public void endGameVisible() {
-//        Button doneButton = (Button) findViewById(R.id.donePushUp_button);
-//        doneButton.setVisibility(View.VISIBLE);
-
-//        ImageView checkMarkImageView = (ImageView) findViewById(R.id.check_mark_image_view);
-//        checkMarkImageView.setVisibility(View.VISIBLE);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-//        ImageView checkMarkImageView = (ImageView) findViewById(R.id.check_mark_image_view);
-//        builder.setView(checkMarkImageView);
 
         //user cannot close dialog with back button
         builder.setCancelable(false);
@@ -186,11 +182,6 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         builder.show();
-
-
-
-//        View theThreeTimerButtons = findViewById(R.id.timer_buttons_linear_layout);
-//        theThreeTimerButtons.setVisibility(View.INVISIBLE);
     }
 
 
@@ -206,10 +197,11 @@ public class MainActivity extends ActionBarActivity {
         try {
             setNumberMax = Integer.parseInt(setEditText.getText().toString());
         } catch (NumberFormatException e) {
-            Log.d("not integer", "error");
+//            Log.d("not integer", "error");
             Toast toast = Toast.makeText(this, "Enter an integer value.", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 300);
             toast.show();
+            return;
         }
 
         //update DB with new sets
@@ -225,13 +217,14 @@ public class MainActivity extends ActionBarActivity {
 
         try {
             timeLeft = Integer.parseInt(TimeEditText.getText().toString());
-            Log.d("time: ", ""+timeLeft);
+//            Log.d("time: ", ""+timeLeft);
         }
         catch(NumberFormatException e){
-            Log.d("not integer","error");
+//            Log.d("not integer","error");
             Toast toast = Toast.makeText(this, "Enter an integer value.", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 750);
             toast.show();
+            return;
         }
 
         timeLeft = timeLeft * 1000;
@@ -240,8 +233,6 @@ public class MainActivity extends ActionBarActivity {
         //update DB with new time
         TextView exerciseName = (TextView) findViewById(R.id.exercise_name_text_view);
         MyDB.updateTimer(exerciseName.getText().toString(), TimeEditText.getText().toString());
-        Log.d("stored time in DB", "yes");
-
     }
 
 }
