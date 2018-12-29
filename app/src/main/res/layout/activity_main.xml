@@ -59,7 +59,7 @@
         android:layout_marginRight="64dp"
         android:layout_toRightOf="@id/sets_edit_text"
         android:background="@drawable/button_add_exercise"
-        android:onClick="setSetEditText"
+        android:onClick="updateSetEditText"
         android:text="Update"
         android:textAllCaps="false"
         android:visibility="visible"

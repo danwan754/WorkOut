@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             setEdit.setText(temp.get(0));
-            setSetEditText(setEdit);
+            setSetMax(Integer.parseInt(temp.get(0)));
         }
 
         setEdit.requestFocus();
@@ -164,39 +164,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //clicking 'Update Sets' button triggers this function to update the max number of sets
-    public void setSetEditText(View v) {
-
-        EditText setEditText = (EditText) findViewById(R.id.sets_edit_text);
-
-        try {
-            setNumberMax = Integer.parseInt(setEditText.getText().toString());
-        } catch (NumberFormatException e) {
-//            Log.d("not integer", "error");
-            Toast toast = Toast.makeText(this, "Enter an integer value.", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.TOP, 0, 300);
-            toast.show();
-            return;
-        }
-
-        //update DB with new sets
-        TextView exerciseName = (TextView) findViewById(R.id.exercise_name_text_view);
-        MyDB.updateSets(exerciseName.getText().toString(), setEditText.getText().toString());
-
+    public void updateSetEditText(View v) {
+        EditText editText = (EditText) findViewById(R.id.sets_edit_text);
+        updateSetsOrTime(editText, "sets");
     }
 
     //triggered by clicking on 'Update' button for the timer. Updates the rest time limit, and stored in 'timeLeft' variable
     public void updateTimeLeft(View v) {
+        EditText editText = (EditText) findViewById(R.id.time_edit_text);
+        updateSetsOrTime(editText, "time");
+    }
 
-        EditText timeEditText = (EditText) findViewById(R.id.time_edit_text);
+    public void updateSetsOrTime(EditText editText, String field) {
+
+        if (!field.equals("time") || !field.equals("sets")) {
+            Log.d("updateSetsOrTime", "field is not 'sets' or 'time'");
+        }
+
         final InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
         Toast toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP, 0, 400);
         TextView message = toast.getView().findViewById(android.R.id.message);
 
         try {
-            int inputTime = Integer.parseInt(timeEditText.getText().toString());
-            setTimeLeft(inputTime);
-//            Log.d("time: ", ""+timeLeft);
+            int value = Integer.parseInt(editText.getText().toString());
+            if (field.equals("time")) {
+                setTimeLeft(value);
+            }
+            else {
+                setSetMax(value);
+            }
         }
         catch(NumberFormatException e){
 //            Log.d("not integer","error");
@@ -209,7 +206,12 @@ public class MainActivity extends AppCompatActivity {
         TextView exerciseName = (TextView) findViewById(R.id.exercise_name_text_view);
 
         try {
-            MyDB.updateTimer(exerciseName.getText().toString(), timeEditText.getText().toString());
+            if (field.equals("time")) {
+                MyDB.updateTimer(exerciseName.getText().toString(), editText.getText().toString());
+            }
+            else {
+                MyDB.updateSets(exerciseName.getText().toString(), editText.getText().toString());
+            }
         }
         catch (Exception e) {
             toast.setText("Failed to update");
@@ -218,17 +220,25 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        toast.setText("Updated rest time");
+        if (field.equals("time")) {
+            toast.setText("Updated rest time");
+        }
+        else {
+            toast.setText("Updated sets");
+        }
         message.setTextColor(Color.GREEN);
         toast.show();
-
-        timeEditText.clearFocus();
-        imm.hideSoftInputFromWindow(timeEditText.getWindowToken(), 0);
+        editText.clearFocus();
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
 
     public void setTimeLeft(int time) {
         timeLeft = time * 1000;
         tempTime = timeLeft;
+    }
+
+    public void setSetMax(int num) {
+        setNumberMax = num;
     }
 }
