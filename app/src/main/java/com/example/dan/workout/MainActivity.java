@@ -2,6 +2,8 @@ package com.example.dan.workout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteException;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
@@ -10,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -56,33 +59,9 @@ public class MainActivity extends AppCompatActivity {
         // display the time value if not empty
         if (temp.get(2) !=  null) {
             setTime.setText(temp.get(2));
-            setTimeLeft(setTime);
+            setTimeLeft(Integer.parseInt(temp.get(2)));
         }
     }
-
-
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-*/
 
     CountDownTimer countingDownTimer;
     long timeLeft = 0;
@@ -150,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             timeLeft = tempTime;
 
             TextView timerDisplay = (TextView) findViewById(R.id.timer_display_text_view);
-            timerDisplay.setText("Timer: Press Start");
+            timerDisplay.setText("Press Start");
 
             Button startButton = (Button) findViewById(R.id.start_button);
             startButton.setText("Start Set " + setNumber);
@@ -205,29 +184,51 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //triggered by clicking on 'Update TImer'. Updates the rest time limit, and stored in 'timeLeft' variable
-    public void setTimeLeft(View v) {
+    //triggered by clicking on 'Update' button for the timer. Updates the rest time limit, and stored in 'timeLeft' variable
+    public void updateTimeLeft(View v) {
 
-        EditText TimeEditText = (EditText) findViewById(R.id.time_edit_text);
+        EditText timeEditText = (EditText) findViewById(R.id.time_edit_text);
+        final InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+        Toast toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP, 0, 400);
+        TextView message = toast.getView().findViewById(android.R.id.message);
 
         try {
-            timeLeft = Integer.parseInt(TimeEditText.getText().toString());
+            int inputTime = Integer.parseInt(timeEditText.getText().toString());
+            setTimeLeft(inputTime);
 //            Log.d("time: ", ""+timeLeft);
         }
         catch(NumberFormatException e){
 //            Log.d("not integer","error");
-            Toast toast = Toast.makeText(this, "Enter an integer value.", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.TOP, 0, 750);
+            toast.setText("Enter an integer value.");
+            message.setTextColor(Color.RED);
             toast.show();
             return;
         }
 
-        timeLeft = timeLeft * 1000;
-        tempTime = timeLeft;
-
-        //update DB with new time
         TextView exerciseName = (TextView) findViewById(R.id.exercise_name_text_view);
-        MyDB.updateTimer(exerciseName.getText().toString(), TimeEditText.getText().toString());
+
+        try {
+            MyDB.updateTimer(exerciseName.getText().toString(), timeEditText.getText().toString());
+        }
+        catch (Exception e) {
+            toast.setText("Failed to update");
+            message.setTextColor(Color.RED);
+            toast.show();
+            return;
+        }
+
+        toast.setText("Updated rest time");
+        message.setTextColor(Color.GREEN);
+        toast.show();
+
+        timeEditText.clearFocus();
+        imm.hideSoftInputFromWindow(timeEditText.getWindowToken(), 0);
     }
 
+
+    public void setTimeLeft(int time) {
+        timeLeft = time * 1000;
+        tempTime = timeLeft;
+    }
 }
