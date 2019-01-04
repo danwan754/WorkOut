@@ -1,0 +1,99 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialog_settings_constraintLayout"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    android:layout_gravity="center"
+    android:background="@drawable/settings_dialog">
+
+
+    <TextView
+        android:id="@+id/settings_textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/settings_dialog"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:text="Settings"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/settings_volume_seekBar"
+        android:layout_width="198dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_progress_textView" />
+
+    <Switch
+        android:id="@+id/settings_vibrate_switch"
+        android:layout_width="73dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_textView" />
+
+    <TextView
+        android:id="@+id/settings_vibrate_textView"
+        android:layout_width="120dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="8dp"
+        android:text="Vibrate"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toStartOf="@+id/settings_vibrate_switch"
+        app:layout_constraintHorizontal_bias="0.131"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_textView" />
+
+    <TextView
+        android:id="@+id/settings_volume_textView"
+        android:layout_width="103dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="8dp"
+        android:text="Volume"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toStartOf="@+id/settings_volume_seekBar"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_vibrate_textView" />
+
+    <TextView
+        android:id="@+id/settings_progress_textView"
+        android:layout_width="31dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="96dp"
+        android:text="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_vibrate_switch" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left" />
+
+    <Button
+        android:id="@+id/settings_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="@+id/barrier"
+        app:layout_constraintTop_toBottomOf="@+id/settings_volume_seekBar" />
+
+</android.support.constraint.ConstraintLayout>

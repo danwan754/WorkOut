@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">WorkOut</string>
+    <string name="app_name"> My Work Out</string>
 
     <string name="confirm_name">Done</string>
     <string name="cancel_name">Cancel</string>
+    <string name="settings_back">Back</string>
 </resources>

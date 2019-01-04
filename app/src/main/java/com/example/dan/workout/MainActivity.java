@@ -1,16 +1,20 @@
 package com.example.dan.workout;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -18,17 +22,28 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dan.workout.dialog.SettingsDialog;
+import com.example.dan.workout.helper.DBHelper;
+import com.example.dan.workout.model.Settings;
+
 import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    long timeLeft = 0;
+    int setNumberMax = 0;
+    int setNumber = 1;
+    long tempTime = 0;
+    CountDownTimer countingDownTimer;
     DBHelper MyDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("exerciseName");
@@ -63,12 +78,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    CountDownTimer countingDownTimer;
-    long timeLeft = 0;
-    int setNumberMax = 0;
-    int setNumber = 1;
-    long tempTime = 0;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            SettingsDialog settingsDialog = new SettingsDialog(this);
+            settingsDialog.showSettingsDialog();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void startTimer(View v) {
         final TextView currentSet = (TextView) findViewById(R.id.current_set_text_view);
@@ -108,8 +134,22 @@ public class MainActivity extends AppCompatActivity {
                     startButton.setText("Start set " + setNumber);
                     currentSet.setText("Current Set: " + setNumber);
                 }
-                //             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                //             v.vibrate(1000);
+
+                // get the settings
+                Settings settings = MyDB.getSettings();
+
+                // trigger vibrate and/or audio if set in settings
+                if (settings.isVibrate()) {
+                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    v.vibrate(1000);
+                }
+                if (settings.getVolume() > 0) {
+                    MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.ready_sound);
+                    float volume = (float) (settings.getVolume() / 100.0);
+//                    Log.d("calculatedVolume", Float.toString(volume));
+                    mp.setVolume(volume, volume);
+                    mp.start();
+                }
                 timeLeft = tempTime;
             }
         }.start();

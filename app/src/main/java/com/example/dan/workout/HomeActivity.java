@@ -5,13 +5,21 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+
+
+import com.example.dan.workout.dialog.SettingsDialog;
+import com.example.dan.workout.helper.DBHelper;
+import com.example.dan.workout.model.Exercise;
+import com.example.dan.workout.model.Settings;
 
 import java.util.ArrayList;
 
@@ -19,16 +27,19 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity {
     String temp_name_holder;
     DBHelper MyDB;
+    Settings settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
         MyDB = new DBHelper(this);
 
         //fetch all exercises in database
-        ArrayList exercise_list = MyDB.getAllExercises();
+        ArrayList exercise_list = MyDB.getAllExerciseNames();
 
 //        if (exercise_list.isEmpty()) {
 //            TextView select_exercise = (TextView) findViewById(R.id.what_exercise_text_view);
@@ -42,6 +53,24 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            SettingsDialog settingsDialog = new SettingsDialog(this);
+            settingsDialog.showSettingsDialog();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //called when user clicks on an exercise button
@@ -61,7 +90,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //set the new exercise layout in dialog
         LayoutInflater inflater = LayoutInflater.from(this);
-        View dialogueLayout = inflater.inflate(R.layout.dialogue_name, null);
+        View dialogueLayout = inflater.inflate(R.layout.dialog_name, null);
         builder.setView(dialogueLayout);
 
         final EditText temp_editText = (EditText) dialogueLayout.findViewById(R.id.name_to_add_edit_text);
@@ -77,7 +106,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 temp_name_holder = temp_editText.getText().toString();
                 createButton(temp_name_holder);
-                MyDB.insertExercise(temp_name_holder);
+                MyDB.insertExercise(new Exercise(temp_name_holder));
 //                Log.d("Exercise added:", temp_name_holder );
 
                 //hide the soft keyboard
@@ -98,7 +127,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void removeExercise(View view){
-        final ArrayList removal_list = MyDB.getAllExercises();
+        final ArrayList removal_list = MyDB.getAllExerciseNames();
         final ArrayList<Integer> temp_list = new ArrayList<>();
         String removal_list_string[] = new String[removal_list.size()];
 
