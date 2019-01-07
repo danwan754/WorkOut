@@ -1,0 +1,59 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_add_exercise">
+
+
+    <TextView
+        android:id="@+id/new_exercise_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:text="New Exercise"
+        android:textSize="35sp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="serif"/>
+
+    <EditText
+        android:id="@+id/name_to_add_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/editview_add_exercise"
+        android:gravity="center"
+        android:hint="exercise name"
+        android:inputType="text"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/add_cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/button_dialog_add_exercise"
+            android:text="Cancel" />
+
+        <Button
+            android:id="@+id/add_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_dialog_add_exercise"
+            android:text="Save" />
+    </LinearLayout>
+
+</LinearLayout>

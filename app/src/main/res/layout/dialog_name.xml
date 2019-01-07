@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/edittext_box"
+        android:background="@drawable/editview_add_exercise"
         android:gravity="center"
         android:hint="exercise name"
         android:inputType="text"

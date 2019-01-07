@@ -6,8 +6,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:onClick="hideKeyboard"
     tools:context=".MainActivity">
 
     <android.support.v7.widget.Toolbar
@@ -47,7 +49,7 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="44dp"
         android:layout_marginEnd="4dp"
-        android:background="@drawable/edittext_box"
+        android:background="@drawable/editview_add_exercise"
         android:gravity="center"
         android:inputType="number"
         android:selectAllOnFocus="true"
@@ -82,7 +84,7 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="4dp"
-        android:background="@drawable/edittext_box"
+        android:background="@drawable/editview_add_exercise"
         android:gravity="center"
         android:inputType="number"
         android:selectAllOnFocus="true"

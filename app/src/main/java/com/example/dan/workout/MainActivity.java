@@ -221,7 +221,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d("updateSetsOrTime", "field is not 'sets' or 'time'");
         }
 
-        final InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
         Toast toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP, 0, 400);
         TextView message = toast.getView().findViewById(android.R.id.message);
@@ -269,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
         message.setTextColor(Color.GREEN);
         toast.show();
         editText.clearFocus();
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        hideKeyboard(editText);
     }
 
 
@@ -280,5 +279,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void setSetMax(int num) {
         setNumberMax = num;
+    }
+
+    public void hideKeyboard(View v) {
+        final InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }

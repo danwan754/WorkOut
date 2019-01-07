@@ -2,6 +2,7 @@ package com.example.dan.workout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,8 +15,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
+import com.example.dan.workout.dialog.AddExerciseDialog;
 import com.example.dan.workout.dialog.SettingsDialog;
 import com.example.dan.workout.helper.DBHelper;
 import com.example.dan.workout.model.Exercise;
@@ -84,45 +87,66 @@ public class HomeActivity extends AppCompatActivity {
     //adds a button for an exercise in activity_home layout, and insert exercise in DB
     public void addExerciseList(View view) {
 
-        //create alert dialogue to prompt user for name of the exercise to add to list
+////////////////////////// use the logic in createAddExerciseDialog method in AddExerciseDialog class
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Name Exercise");
 
         //set the new exercise layout in dialog
         LayoutInflater inflater = LayoutInflater.from(this);
-        View dialogueLayout = inflater.inflate(R.layout.dialog_name, null);
+        View dialogueLayout = inflater.inflate(R.layout.dialog_add_exercise, null);
         builder.setView(dialogueLayout);
 
-        final EditText temp_editText = (EditText) dialogueLayout.findViewById(R.id.name_to_add_edit_text);
+        final EditText name_editText = (EditText) dialogueLayout.findViewById(R.id.name_to_add_edit_text);
 
-        //force the soft keyboard to show
-//        exercise_nom.requestFocus();
-        final InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+        final InputMethodManager imm = (InputMethodManager) this.getSystemService(this.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
 
+        final AlertDialog dialog = builder.show();
 
-        builder.setPositiveButton(R.string.confirm_name, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                temp_name_holder = temp_editText.getText().toString();
-                createButton(temp_name_holder);
-                MyDB.insertExercise(new Exercise(temp_name_holder));
-//                Log.d("Exercise added:", temp_name_holder );
+        // hide the default rectangular container of the dialog
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-                //hide the soft keyboard
-                imm.hideSoftInputFromWindow(temp_editText.getWindowToken(), 0);
-                dialog.dismiss();
-            }
-        });
-        builder.setNegativeButton(R.string.cancel_name, new DialogInterface.OnClickListener() {
+        // button closes settings dialog on click
+        Button cancelButton = dialogueLayout.findViewById(R.id.add_cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //hide the soft keyboard
-                imm.hideSoftInputFromWindow(temp_editText.getWindowToken(), 0);
+            public void onClick(View v) {
+                imm.hideSoftInputFromWindow(name_editText.getWindowToken(), 0);
                 dialog.cancel();
             }
         });
-        builder.show();
+
+        // button saves settings dialog on click
+        Button saveButton = dialogueLayout.findViewById(R.id.add_save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String exerciseName = name_editText.getText().toString();
+
+                // verify that name is not empty and does not already exist
+                if (exerciseName.isEmpty()) {
+                    Toast.makeText(HomeActivity.this, "Name cannot be empty", Toast.LENGTH_SHORT).show();
+                }
+                else if (MyDB.getAllExerciseNames().contains(exerciseName)) {
+                    Toast.makeText(HomeActivity.this, "Exercise '" + exerciseName + "' already exists", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    MyDB.insertExercise(new Exercise(exerciseName));
+                    createButton(exerciseName);
+//                  Log.d("Exercise added:", exerciseName );
+
+                    //hide the soft keyboard
+                    imm.hideSoftInputFromWindow(name_editText.getWindowToken(), 0);
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        dialog.show();
+
+/////////////////////////// use the AddExerciseDialog class
+//        AddExerciseDialog addExerciseDialog = new AddExerciseDialog(this);
+//        addExerciseDialog.createAddExerciseDialog();
+//        addExerciseDialog.showDialog();
 
     }
 
