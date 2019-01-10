@@ -76,7 +76,6 @@
         android:layout_height="17dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="96dp"
-        android:text="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_vibrate_switch" />
 
@@ -86,8 +85,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
         android:layout_marginEnd="24dp"
-        android:text="Save"
-        android:background="@drawable/button_add_exercise"
+        android:text="@string/save_dialog"
+        android:background="@drawable/button_dialog_add_exercise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_volume_seekBar" />
 

@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name"> My Work Out</string>
 
-    <string name="confirm_name">Done</string>
-    <string name="cancel_name">Cancel</string>
+    <string name="cancel_dialog">Cancel</string>
+    <string name="save_dialog">Save</string>
     <string name="settings_back">Back</string>
+    <string name="remove_exercise_title">Select exercises to remove</string>
 </resources>

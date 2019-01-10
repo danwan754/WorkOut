@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
         // if number of sets field is empty, prompt user to enter value
         if (temp.get(0) == null) {
-//            setEdit.requestFocus();
             Log.d("SET", "SET IS NULL");
         }
         else {
@@ -146,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
                 if (settings.getVolume() > 0) {
                     MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.ready_sound);
                     float volume = (float) (settings.getVolume() / 100.0);
-//                    Log.d("calculatedVolume", Float.toString(volume));
                     mp.setVolume(volume, volume);
                     mp.start();
                 }
@@ -235,7 +233,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         catch(NumberFormatException e){
-//            Log.d("not integer","error");
             toast.setText("Enter an integer value.");
             message.setTextColor(Color.RED);
             toast.show();

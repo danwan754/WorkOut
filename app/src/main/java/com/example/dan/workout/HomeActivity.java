@@ -16,9 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-
-import com.example.dan.workout.dialog.AddExerciseDialog;
 import com.example.dan.workout.dialog.SettingsDialog;
 import com.example.dan.workout.helper.DBHelper;
 import com.example.dan.workout.model.Exercise;
@@ -44,18 +41,12 @@ public class HomeActivity extends AppCompatActivity {
         //fetch all exercises in database
         ArrayList exercise_list = MyDB.getAllExerciseNames();
 
-//        if (exercise_list.isEmpty()) {
-//            TextView select_exercise = (TextView) findViewById(R.id.what_exercise_text_view);
-//            select_exercise.setText("Add an exercise to the list.");
-//        }
-
         //create button for each exercise in DB
         if (exercise_list.size() != 0) {
             for (int i = 0; i < exercise_list.size(); i++) {
                 createButton(exercise_list.get(i).toString());
             }
         }
-
     }
 
     @Override
@@ -132,7 +123,6 @@ public class HomeActivity extends AppCompatActivity {
                 else {
                     MyDB.insertExercise(new Exercise(exerciseName));
                     createButton(exerciseName);
-//                  Log.d("Exercise added:", exerciseName );
 
                     //hide the soft keyboard
                     imm.hideSoftInputFromWindow(name_editText.getWindowToken(), 0);
@@ -142,12 +132,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         dialog.show();
-
-/////////////////////////// use the AddExerciseDialog class
-//        AddExerciseDialog addExerciseDialog = new AddExerciseDialog(this);
-//        addExerciseDialog.createAddExerciseDialog();
-//        addExerciseDialog.showDialog();
-
     }
 
     public void removeExercise(View view){
@@ -181,7 +165,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 for (int i =0; i<temp_list.size(); i++){
-  //                  int j =  temp_list.get(i);
                     MyDB.deleteExercise(removal_list.get(temp_list.get(i)).toString());
                 }
                 Intent intent = getIntent();
@@ -209,9 +192,8 @@ public class HomeActivity extends AppCompatActivity {
         final Button newButton = (Button) inflater1.inflate(R.layout.add_button_style, listLayout, false);
         listLayout.addView(newButton);
 
-        if (s != null) {
+        if (!s.isEmpty()) {
             newButton.setText(s);
-//            Log.d("Read name: ", s);
         }
 
         //clicking button will change from HomeActivity to MainActivity
