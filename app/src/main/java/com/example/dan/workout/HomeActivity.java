@@ -148,7 +148,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         //create dialog to allow user to select the exercises to delete
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.dialogRoundCorners);
         builder.setTitle("Select the exercises to delete");
         builder.setMultiChoiceItems(removal_list_string, null, new DialogInterface.OnMultiChoiceClickListener() {
             @Override

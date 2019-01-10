@@ -37,4 +37,9 @@
     <style name="SettingsNegativeButton">
         <item name="android:layout_marginTop">20dp</item>
     </style>
+
+    <style name="dialogRoundCorners" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog_round_corners</item>
+    </style>
+
 </resources>
