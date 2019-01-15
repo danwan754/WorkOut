@@ -47,13 +47,13 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("exerciseName");
-        TextView exerciseName = (TextView) findViewById(R.id.exercise_name_text_view);
+        TextView exerciseName = findViewById(R.id.exercise_name_text_view);
         exerciseName.setText(name);
 
         MyDB = new DBHelper(this);
 
-        EditText setEdit = (EditText) findViewById(R.id.sets_edit_text);
-        EditText setTime = (EditText) findViewById(R.id.time_edit_text);
+        EditText setEdit = findViewById(R.id.sets_edit_text);
+        EditText setTime = findViewById(R.id.time_edit_text);
 
         //get previous values of sets and timer
         ArrayList<String> temp = MyDB.getFieldData(name);
@@ -96,19 +96,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startTimer(View v) {
-        final TextView currentSet = (TextView) findViewById(R.id.current_set_text_view);
+        final TextView currentSet = findViewById(R.id.current_set_text_view);
         currentSet.setVisibility(View.VISIBLE);
 
-        final Button startButton = (Button) findViewById(R.id.start_button);
+        final Button startButton = findViewById(R.id.start_button);
 
         String buttonString = startButton.getText().toString();
         if (buttonString.equals("Pause")) {
-            startButton.setText("Resume");
+            startButton.setText(R.string.resume);
             pauseTime();
             return;
         }
         else {
-            startButton.setText("Pause");
+            startButton.setText(R.string.pause);
         }
 
         countingDownTimer = new CountDownTimer(timeLeft, 1) {

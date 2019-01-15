@@ -19,15 +19,12 @@ import android.widget.Toast;
 import com.example.dan.workout.dialog.SettingsDialog;
 import com.example.dan.workout.helper.DBHelper;
 import com.example.dan.workout.model.Exercise;
-import com.example.dan.workout.model.Settings;
 
 import java.util.ArrayList;
 
 
 public class HomeActivity extends AppCompatActivity {
-    String temp_name_holder;
     DBHelper MyDB;
-    Settings settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
         View dialogueLayout = inflater.inflate(R.layout.dialog_add_exercise, null);
         builder.setView(dialogueLayout);
 
-        final EditText name_editText = (EditText) dialogueLayout.findViewById(R.id.name_to_add_edit_text);
+        final EditText name_editText = dialogueLayout.findViewById(R.id.name_to_add_edit_text);
 
         final InputMethodManager imm = (InputMethodManager) this.getSystemService(this.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
@@ -185,7 +182,7 @@ public class HomeActivity extends AppCompatActivity {
     public void createButton(String s) {
 
         //this is the layout view in activity_home.xml where button will go
-        LinearLayout listLayout = (LinearLayout) findViewById(R.id.exercise_index_layout);
+        LinearLayout listLayout = findViewById(R.id.exercise_index_layout);
 
         //create a button view from an xml and adds it into the layout view
         LayoutInflater inflater1 = LayoutInflater.from(this);
