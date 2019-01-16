@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.dan.workout">
+    package="com.danwan.workout">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
     <application
@@ -10,12 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme2">
         <activity
-            android:name=".MainActivity"
+            android:name="com.danwan.workout.MainActivity"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".HomeActivity"
+            android:name="com.danwan.workout.HomeActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

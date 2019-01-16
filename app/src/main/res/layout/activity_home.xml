@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="com.example.dan.workout.HomeActivity">
+    tools:context="com.danwan.workout.HomeActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"

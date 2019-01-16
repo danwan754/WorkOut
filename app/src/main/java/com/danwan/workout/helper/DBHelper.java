@@ -1,4 +1,4 @@
-package com.example.dan.workout.helper;
+package com.danwan.workout.helper;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.dan.workout.model.Exercise;
-import com.example.dan.workout.model.Settings;
+import com.danwan.workout.model.Exercise;
+import com.danwan.workout.model.Settings;
 
 import java.util.ArrayList;
 

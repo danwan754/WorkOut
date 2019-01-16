@@ -1,4 +1,4 @@
-package com.example.dan.workout.model;
+package com.danwan.workout.model;
 
 
 /* stores the current settings, i.e. vibrate mode and volume */

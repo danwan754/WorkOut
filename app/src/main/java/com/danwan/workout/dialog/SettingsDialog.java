@@ -1,8 +1,7 @@
-package com.example.dan.workout.dialog;
+package com.danwan.workout.dialog;
 
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -12,12 +11,10 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.dan.workout.R;
-import com.example.dan.workout.helper.DBHelper;
-import com.example.dan.workout.model.Exercise;
-import com.example.dan.workout.model.Settings;
+import com.danwan.workout.R;
+import com.danwan.workout.helper.DBHelper;
+import com.danwan.workout.model.Settings;
 
 public class SettingsDialog {
 

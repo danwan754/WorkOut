@@ -1,4 +1,4 @@
-package com.example.dan.workout;
+package com.danwan.workout;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

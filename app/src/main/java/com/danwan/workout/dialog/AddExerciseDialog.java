@@ -1,4 +1,4 @@
-package com.example.dan.workout.dialog;
+package com.danwan.workout.dialog;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,9 +9,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.dan.workout.R;
-import com.example.dan.workout.helper.DBHelper;
-import com.example.dan.workout.model.Exercise;
+import com.danwan.workout.R;
+import com.danwan.workout.helper.DBHelper;
+import com.danwan.workout.model.Exercise;
 
 public class AddExerciseDialog {
 
@@ -33,9 +33,9 @@ public class AddExerciseDialog {
         View dialogueLayout = inflater.inflate(R.layout.dialog_add_exercise, null);
         builder.setView(dialogueLayout);
 
-        final EditText name_editText = (EditText) dialogueLayout.findViewById(R.id.name_to_add_edit_text);
+        final EditText name_editText = dialogueLayout.findViewById(R.id.name_to_add_edit_text);
 
-        final InputMethodManager imm = (InputMethodManager) context.getSystemService(context.INPUT_METHOD_SERVICE);
+        final InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
 
         final AlertDialog dialog = builder.show();

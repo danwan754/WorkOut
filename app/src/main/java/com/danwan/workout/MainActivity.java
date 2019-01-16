@@ -1,4 +1,4 @@
-package com.example.dan.workout;
+package com.danwan.workout;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,9 +22,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.dan.workout.dialog.SettingsDialog;
-import com.example.dan.workout.helper.DBHelper;
-import com.example.dan.workout.model.Settings;
+import com.danwan.workout.dialog.SettingsDialog;
+import com.danwan.workout.helper.DBHelper;
+import com.danwan.workout.model.Settings;
 
 import java.util.ArrayList;
 
@@ -121,33 +121,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                if(setNumber <= setNumberMax) {
-                    timerDisplay.setText("Set " + setNumber + " done.");
-                    setNumber = setNumber + 1;
-                    currentSet.setText("Current Set: " + (setNumber - 1));
-                }
-                if (setNumber > setNumberMax) {
-                    endGameVisible();
-                    timerDisplay.setText("All sets done.");
-                } else {
-                    startButton.setText("Start set " + setNumber);
-                    currentSet.setText("Current Set: " + setNumber);
-                }
-
-                // get the settings
-                Settings settings = MyDB.getSettings();
-
-                // trigger vibrate and/or audio if set in settings
-                if (settings.isVibrate()) {
-                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                    v.vibrate(1000);
-                }
-                if (settings.getVolume() > 0) {
-                    MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.ready_sound);
-                    float volume = (float) (settings.getVolume() / 100.0);
-                    mp.setVolume(volume, volume);
-                    mp.start();
-                }
+                finishSet(timerDisplay, currentSet, startButton);
                 timeLeft = tempTime;
             }
         }.start();
@@ -161,16 +135,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void resetTime(View v) {
+
+        // if timer is running, cancel it
         if (countingDownTimer != null) {
             countingDownTimer.cancel();
-
             timeLeft = tempTime;
+        }
 
-            TextView timerDisplay = (TextView) findViewById(R.id.timer_display_text_view);
-            timerDisplay.setText("Press Start");
+        TextView currentSet = findViewById(R.id.current_set_text_view);
+        TextView timerDisplay = findViewById(R.id.timer_display_text_view);
+        Button startButton = findViewById(R.id.start_button);
 
-            Button startButton = (Button) findViewById(R.id.start_button);
-            startButton.setText("Start Set " + setNumber);
+        finishSet(timerDisplay, currentSet, startButton);
+    }
+
+    public void finishSet(TextView timerDisplay, TextView currentSet, Button startButton) {
+
+        if (setNumber <= setNumberMax) {
+            timerDisplay.setText("Set " + setNumber + " done.");
+            setNumber = setNumber + 1;
+            currentSet.setText("Current Set: " + (setNumber - 1));
+        }
+        if (setNumber > setNumberMax) {
+            endGameVisible();
+            timerDisplay.setText("All sets done.");
+        } else {
+            startButton.setText("Rest");
+            currentSet.setText("Current Set: " + setNumber);
+        }
+
+        // get the settings
+        Settings settings = MyDB.getSettings();
+
+        // trigger vibrate and/or audio if set in settings
+        if (settings.isVibrate()) {
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(1000);
+        }
+        if (settings.getVolume() > 0) {
+            MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.ready_sound);
+            float volume = (float) (settings.getVolume() / 100.0);
+            mp.setVolume(volume, volume);
+            mp.start();
         }
     }
 
@@ -203,13 +209,13 @@ public class MainActivity extends AppCompatActivity {
 
     //clicking 'Update Sets' button triggers this function to update the max number of sets
     public void updateSetEditText(View v) {
-        EditText editText = (EditText) findViewById(R.id.sets_edit_text);
+        EditText editText = findViewById(R.id.sets_edit_text);
         updateSetsOrTime(editText, "sets");
     }
 
     //triggered by clicking on 'Update' button for the timer. Updates the rest time limit, and stored in 'timeLeft' variable
     public void updateTimeLeft(View v) {
-        EditText editText = (EditText) findViewById(R.id.time_edit_text);
+        EditText editText = findViewById(R.id.time_edit_text);
         updateSetsOrTime(editText, "time");
     }
 
@@ -239,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        TextView exerciseName = (TextView) findViewById(R.id.exercise_name_text_view);
+        TextView exerciseName = findViewById(R.id.exercise_name_text_view);
 
         try {
             if (field.equals("time")) {
@@ -279,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void hideKeyboard(View v) {
-        final InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+        final InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }

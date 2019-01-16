@@ -1,11 +1,9 @@
-package com.example.dan.workout;
+package com.danwan.workout;
 
 import org.junit.Test;
-import java.util.regex.Pattern;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import com.example.dan.workout.R;
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.

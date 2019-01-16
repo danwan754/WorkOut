@@ -1,5 +1,6 @@
-package com.example.dan.workout;
+package com.danwan.workout;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -16,9 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import com.example.dan.workout.dialog.SettingsDialog;
-import com.example.dan.workout.helper.DBHelper;
-import com.example.dan.workout.model.Exercise;
+import com.danwan.workout.dialog.SettingsDialog;
+import com.danwan.workout.helper.DBHelper;
+import com.danwan.workout.model.Exercise;
 
 import java.util.ArrayList;
 
@@ -85,7 +86,7 @@ public class HomeActivity extends AppCompatActivity {
 
         final EditText name_editText = dialogueLayout.findViewById(R.id.name_to_add_edit_text);
 
-        final InputMethodManager imm = (InputMethodManager) this.getSystemService(this.INPUT_METHOD_SERVICE);
+        final InputMethodManager imm = (InputMethodManager) this.getSystemService(INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
 
         final AlertDialog dialog = builder.show();
